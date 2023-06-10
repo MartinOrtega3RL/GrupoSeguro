@@ -1,0 +1,146 @@
+:root {
+    --bs-custom-color: #ffffff;
+}
+
+.bg-custom {
+    background-color: var(--bs-custom-color);
+    height: 100px;
+    font-size: 20px;
+}
+
+.nav-link {
+    color: black;
+}
+
+.AddAgentContainer {
+    margin-top: 200px;
+}
+
+.AddAgentContainer2 {
+    margin-top: 400px;
+}
+
+body {
+    background-color: rgb(36, 42, 43);
+}
+
+.form-label {
+    color: #f7f5f5;
+    font-weight: bold;
+    /* Hace que la fuente sea más negrita o gruesa */
+    font-family: 'Arial', sans-serif;
+    /* Cambia la fuente a Arial o cualquier otra fuente sans-serif */
+    font-style: oblique;
+
+}
+
+.btn-primary {
+    padding: 15px;
+    margin-top: 20px;
+}
+
+
+
+
+Form {
+    text-align: left;
+    font-size: 14px;
+    background-size: cover;
+    padding: -110%;
+    margin-top: 700px;
+    margin-left: 50px;
+}
+
+.container {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 250px;
+
+}
+
+.log-container{
+    position: absolute
+}
+
+
+.arrow-container {
+    position: relative;
+    width: 500%;
+}
+
+.arrow {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-top: 200px;
+    margin-bottom: 20px;
+    text-align: center;
+    margin-left: 20px;
+    /* Agrega un margen izquierdo para mover la flecha hacia la derecha */
+
+}
+
+.List {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 500px;
+    overflow: scroll;
+    overflow-x: auto;
+    max-height: 500px;
+    /* ajusta la altura deseada */
+
+}
+
+th {
+    width: 150px;
+    height: 100px;
+    /* Ajusta el ancho según tus necesidades */
+}
+
+.List::-webkit-scrollbar {
+    width: 10px;
+}
+
+.List::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.List::-webkit-scrollbar-thumb {
+    background-color: #0e8f48;
+    border-radius: 5px;
+}
+
+.List::-webkit-scrollbar-thumb:hover {
+    background-color: #051a06;
+}
+
+.background {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.background::before {
+    content: "";
+    background: url("../Images/background.jpg") no-repeat center center fixed;
+    background-size: cover;
+    opacity: 0.3;
+    filter: grayscale(30%);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.active-component {
+    background-color: rgb(42, 197, 202);
+    box-shadow: 0px 0px 5px 0px rgba(255, 255, 255, 1);
+    border: 2px solid rgb(54, 54, 47);
+    color: rgb(19, 109, 226);
+}

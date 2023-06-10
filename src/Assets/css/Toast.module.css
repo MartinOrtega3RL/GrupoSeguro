@@ -1,0 +1,9 @@
+.toast {
+    bottom: 1rem;
+    right: 1rem;
+    position: fixed;
+    display: block;
+    opacity: 1;
+    transition: opacity 1s ease;
+    background-color: white;
+}

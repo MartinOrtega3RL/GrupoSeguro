@@ -2,8 +2,16 @@ import "../Styles/Login_Style.css";
 import React from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { useState, useContext } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import { Contexto } from "../context/context";
 
 export default function Login() {
+  const { obtenerUsuario, obtenerAgente } = useContext(Contexto);
+
   const notify = () =>
     toast.success(
       "¡Perfecto! Uno de nuestros Agentes le enviara un correo con su nueva contraseña.",
@@ -18,11 +26,68 @@ export default function Login() {
         theme: "light",
       }
     );
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [datoss, setDatoss] = useState(null);
+
+  const navigate = useNavigate();
+
+  const urladd =
+    "http://localhost/PHP/React/mypolice/src/Services/consulta.php";
+
+
+    if (email==="admin@gmail.com" && password==="admin1234"){
+
+      navigate("/Admin")
+    
+    }
+
+  const enviarDatos = (e) => {
+    e.preventDefault();
+
+    const params = {
+      email: email,
+      password: password,
+    };
+
+    axios
+      .get(urladd, { params })
+      .then((response) => {
+        console.log(response);
+        // Manejar la respuesta del servidor
+        const datos = response.data;
+        // Realizar las operaciones necesarias con los datos recibidos
+        setDatoss(datos);
+
+        if (datos == null) {
+          setError("No se a encontrado el usuario");
+        } else {
+          setError("");
+          for (let i = 0; i < datos.length; i++) {
+            if (datos[i].existe === "1" && datos[i].estado === "1") {
+              obtenerUsuario(email);
+
+              navigate("/Dashboard");
+              // Realizar la navegación a "/Dashboard" usando la función de navegación de React Router
+            } else if (datos[i].existe === "1" && datos[i].estado === "2") {
+              obtenerAgente(email);
+              navigate("/Agente")
+              // Realizar la navegación a "/Agente" usando la función de navegación de React Router
+            }
+          }
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <>
-      <div className="container py-4 h-90">
-        <div className="row d-flex justify-content-center align-items-center h-100">
-          <div className="col-xl-12">
+      <div className="container h-90">
+        <div className="row d-flex justify-content-center align-items-center h-90">
+          <div className="col-xl-11">
             <div className="card rounded-2 text-black">
               <div className="row g-0">
                 <div className="col-lg-6">
@@ -33,9 +98,6 @@ export default function Login() {
                         style={{ width: "185px", display: "initial" }}
                         alt="logo"
                       />
-                      <h3 className="mt-5 mb-5 pb-1">
-                        Nosotros somos GruposSeguros
-                      </h3>
                     </div>
                     <form>
                       <h6 className="pb-4">Ingrese con su Cuenta</h6>
@@ -45,6 +107,9 @@ export default function Login() {
                           id="form2Example11"
                           className="form-control form-control-lg"
                           placeholder="Email"
+                          required
+                          onChange={(e) => setEmail(e.target.value)}
+                          name="email"
                         />
                         <label
                           className="form-label"
@@ -57,6 +122,9 @@ export default function Login() {
                           id="form2Example22"
                           className="form-control form-control-lg"
                           placeholder="Contraseña"
+                          name="password"
+                          required
+                          onChange={(e) => setPassword(e.target.value)}
                         />
                         <label
                           className="form-label"
@@ -67,9 +135,11 @@ export default function Login() {
                         <button
                           className="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3 btn-lg"
                           type="button"
+                          onClick={enviarDatos}
                         >
                           Ingresar
                         </button>
+                        <h5>{error}</h5>
                       </div>
                       <div className="text-center pt-1 mb-5 pb-1">
                         <a
@@ -99,18 +169,6 @@ export default function Login() {
                       mismo para obtener más información y una cotización
                       personalizada.
                     </p>
-                    <ul className="circles">
-                      <li></li>
-                      <li></li>
-                      <li></li>
-                      <li></li>
-                      <li></li>
-                      <li></li>
-                      <li></li>
-                      <li></li>
-                      <li></li>
-                      <li></li>
-                    </ul>
                   </div>
                 </div>
               </div>
@@ -135,7 +193,7 @@ export default function Login() {
               <div className="modal-footer">
                 <input
                   type="button"
-                  className="btn btn-default"
+                  className="btn btn-primary"
                   data-dismiss="modal"
                   value="Cancelar"
                 />
@@ -169,5 +227,12 @@ export default function Login() {
       </div>
     </>
   );
+
+  const LoaderContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  `;
 }
 //¡Perfecto! Uno de nuestros Agentes le enviara un correo con su nueva contraseña.
